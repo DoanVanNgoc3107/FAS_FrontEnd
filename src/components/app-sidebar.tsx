@@ -144,7 +144,7 @@ const data = {
         },
         {
             name: "Cảm biến nhiệt",
-            url: "#",
+            url: "/dashboard/temp",
             icon: IconFileAi,
         },
         {
