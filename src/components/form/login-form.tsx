@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,11 +11,17 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import React from "react";
+import { login } from "@/services/auth.services";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
@@ -25,7 +33,7 @@ export function LoginForm({
         </div>
         <Field>
           <FieldLabel htmlFor="email">Tên đăng nhập</FieldLabel>
-          <Input id="email" type="text" placeholder="Nhập tên đăng nhập của bạn" required />
+          <Input id="email" type="text" placeholder="Nhập tên đăng nhập của bạn" value={username} onChange={(e) => setUsername(e.target.value)} required />
         </Field>
         <Field>
           <div className="flex items-center">
@@ -37,11 +45,14 @@ export function LoginForm({
               Quên mật khẩu?
             </a>
           </div>
-          <Input placeholder="Nhập mật khẩu của bạn" id="password" type="password" required />
+          <Input placeholder="Nhập mật khẩu của bạn" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </Field>
         <Field>
-          <Button type="submit">Đăng nhập</Button>
+          <Button type="submit" onClick={undefined} disabled={loading}>{loading ? "Đang đăng nhập..." : "Đăng nhập"}</Button>
         </Field>
+        {error && (
+          <div className="text-sm text-red-600 mt-1" role="alert">{error}</div>
+        )}
         <FieldSeparator>Hoặc tiếp tục với</FieldSeparator>
         <Field>
           <Button variant="outline" type="button">

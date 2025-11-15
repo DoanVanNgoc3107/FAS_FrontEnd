@@ -10,11 +10,17 @@ export interface LoginResponse {
     user?: User;
 }
 
-export interface RegisterRequest extends LoginRequest {
+export interface RegisterRequest {
     firstName: string;
     lastName: string;
+    username: string;
+    password: string;
     phoneNumber: string;
     email: string;
     identityCard: string;
+}
+
+export interface RegisterResponse {
+    user?: User;
 }
 
